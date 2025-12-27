@@ -293,9 +293,18 @@
     grid-template-columns: 1fr;
   }
 
-  .reg-actions {
+  .input-row {
+    grid-template-columns: 1fr;
+  }
+
+  .step-actions {
     flex-direction: column;
     align-items: stretch;
+  }
+
+  .btn-primary,
+  .btn-secondary {
+    width: 100%;
   }
 
   .reg-back {

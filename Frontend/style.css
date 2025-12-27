@@ -101,8 +101,8 @@ img {
 }
 
 [data-theme="light"] #nav {
-  background: linear-gradient(90deg, rgba(0, 0, 0, 0.474), rgba(0, 0, 0, 0.462), rgba(0, 0, 0, 0.354));
-  border-bottom: 1px solid rgba(0, 0, 0, 0.415);
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.78), rgba(248, 250, 252, 0.74), rgba(255, 255, 255, 0.70));
+  border-bottom: 1px solid rgba(15, 23, 42, 0.12);
 }
 
 #nav.scrolled {
@@ -111,8 +111,8 @@ img {
 }
 
 [data-theme="light"] #nav.scrolled {
-  background: linear-gradient(90deg, rgba(0, 0, 0, 0.474), rgba(0, 0, 0, 0.462), rgba(0, 0, 0, 0.354));
-  border-bottom: 1px solid rgba(0, 0, 0, 0.415);
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.86), rgba(248, 250, 252, 0.82), rgba(255, 255, 255, 0.78));
+  border-bottom: 1px solid rgba(15, 23, 42, 0.14);
 }
 
 .nav-container {
@@ -299,14 +299,62 @@ img {
 }
 
 .btn {
-  padding: 1rem 2.5rem;
-  font-size: 1rem;
-  font-weight: 600;
+  padding: 1rem 2.75rem;
+  font-size: 1.05rem;
+  font-weight: 700;
   text-decoration: none;
-  border: 2px solid #000;
-  transition: all 0.3s ease;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  transition: var(--transition);
   cursor: pointer;
-  background: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 48px;
+  letter-spacing: 0.2px;
+}
+
+.hero-cta .btn-primary {
+  background: linear-gradient(90deg, rgba(59, 130, 246, 0.98), rgba(139, 92, 246, 0.96));
+  color: #0b1220;
+  border-color: rgba(255, 255, 255, 0.18);
+  box-shadow:
+    0 16px 36px rgba(59, 130, 246, 0.24),
+    0 12px 26px rgba(139, 92, 246, 0.18);
+}
+
+.hero-cta .btn-secondary {
+  background: rgba(255, 255, 255, 0.10);
+  color: var(--page-text);
+  border-color: rgba(255, 255, 255, 0.20);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.22);
+}
+
+.hero-cta .btn:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.05);
+}
+
+.hero-cta .btn:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 4px rgba(59, 130, 246, 0.22),
+    0 16px 36px rgba(59, 130, 246, 0.24),
+    0 12px 26px rgba(139, 92, 246, 0.18);
+}
+
+[data-theme="light"] .hero-cta .btn-secondary {
+  background: rgba(255, 255, 255, 0.78);
+  border-color: rgba(15, 23, 42, 0.14);
+  color: #0b1220;
+  box-shadow: 0 10px 22px rgba(15, 23, 42, 0.14);
+}
+
+[data-theme="light"] .hero-cta .btn-primary {
+  color: #0b1220;
 }
 
 /* Add more styles as needed */
