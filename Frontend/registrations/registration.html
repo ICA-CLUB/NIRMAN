@@ -50,7 +50,7 @@
                 <div class="reg-step" id="step-1">
                   <div class="step-head">
                     <h2 class="step-title">Team Leader Details</h2>
-                    <p class="step-subtitle">Start with the leader details. Phone verification is required.</p>
+                    <p class="step-subtitle">Start with the team and leader details.</p>
                   </div>
 
                   <div class="reg-grid">
@@ -76,44 +76,18 @@
 
                     <div class="form-group reg-full">
                       <label for="leaderPhone">Leader Phone Number *</label>
-                      <div class="input-row">
-                        <input type="tel" id="leaderPhone" name="leaderPhone" required placeholder="Enter phone number" />
-                        <button type="button" class="btn-secondary" id="sendOtpBtn">Send OTP</button>
-                      </div>
+                      <input type="tel" id="leaderPhone" name="leaderPhone" required placeholder="Enter phone number" />
                       <div class="hint" id="leaderPhoneHint"></div>
                     </div>
                   </div>
 
                   <div class="step-actions">
-                    <button type="button" class="btn-primary" id="toStep2Btn">Next</button>
+                    <button type="button" class="btn-primary" id="toStep2Btn">Next: Add Members</button>
                     <a class="reg-back" href="../../index.html">Back to Home</a>
                   </div>
                 </div>
 
                 <div class="reg-step is-hidden" id="step-2">
-                  <div class="step-head">
-                    <h2 class="step-title">Verify Leader Phone</h2>
-                    <p class="step-subtitle">Enter the OTP sent to the leader phone number.</p>
-                  </div>
-
-                  <div class="reg-grid">
-                    <div class="form-group reg-full">
-                      <label for="leaderOtp">OTP *</label>
-                      <div class="input-row">
-                        <input type="text" id="leaderOtp" name="leaderOtp" inputmode="numeric" placeholder="Enter OTP" />
-                        <button type="button" class="btn-secondary" id="verifyOtpBtn">Verify</button>
-                      </div>
-                      <div class="hint" id="otpHint"></div>
-                    </div>
-                  </div>
-
-                  <div class="step-actions">
-                    <button type="button" class="btn-secondary" id="backToStep1Btn">Back</button>
-                    <button type="button" class="btn-primary" id="toStep3Btn" disabled>Continue</button>
-                  </div>
-                </div>
-
-                <div class="reg-step is-hidden" id="step-3">
                   <div class="step-head">
                     <h2 class="step-title">Team Members</h2>
                     <p class="step-subtitle">Add team member names and phone numbers (excluding the leader).</p>
@@ -135,8 +109,8 @@
                   <div class="member-list" id="memberList" aria-label="Team members"></div>
 
                   <div class="step-actions">
-                    <button type="button" class="btn-secondary" id="backToStep2Btn">Back</button>
-                    <button type="submit" class="btn-primary" id="submitBtn">Submit Registration</button>
+                    <button type="button" class="btn-secondary" id="backToStep1Btn">Back</button>
+                    <button type="submit" class="btn-primary" id="submitBtn">Submit & Go to Payment</button>
                   </div>
                 </div>
               </div>
