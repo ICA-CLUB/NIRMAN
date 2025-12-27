@@ -1,0 +1,152 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NIRMAN – Registration</title>
+    <link rel="icon" type="image/png" href="https://img.icons8.com/ios-filled/100/000000/artificial-intelligence.png" />
+    <link rel="stylesheet" href="../style.css" />
+    <link rel="stylesheet" href="registration.css" />
+    <script src="../script.js" defer></script>
+    <script src="registration.js" defer></script>
+  </head>
+  <body>
+    <nav id="nav">
+      <div class="nav-container">
+        <a class="nav-logo" href="../../index.html">
+          <img
+            src="https://img.icons8.com/ios-filled/50/ffffff/artificial-intelligence.png"
+            alt="NIRMAN Logo"
+            class="logo-img"
+          />
+          <span>NIRMAN</span>
+        </a>
+
+        <ul class="nav-links" id="navLinks">
+          <li><a href="../../index.html#about">About</a></li>
+          <li><a href="../../index.html#why">Why Join</a></li>
+          <li><a href="../../index.html#format">Format</a></li>
+          <li><a href="../../index.html#flow">Flow</a></li>
+          <li><a href="../../index.html#rules">Rules</a></li>
+          <li class="theme-toggle-container">
+            <button id="themeToggle" aria-label="Toggle dark/light mode">
+              <span class="theme-icon">🌙</span>
+            </button>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <main class="reg-page">
+      <section class="reg-hero" aria-label="Registration">
+        <div class="reg-hero-inner">
+          <h1 class="reg-title">Register Your Team</h1>
+          <p class="reg-subtitle">Join the future of AI creation. Spots are limited.</p>
+
+          <div class="reg-card" role="region" aria-label="Registration Form">
+            <form class="reg-form" id="registrationForm" novalidate>
+              <div class="reg-steps" aria-label="Registration steps">
+                <div class="reg-step" id="step-1">
+                  <div class="step-head">
+                    <h2 class="step-title">Team Leader Details</h2>
+                    <p class="step-subtitle">Start with the leader details. Phone verification is required.</p>
+                  </div>
+
+                  <div class="reg-grid">
+                    <div class="form-group">
+                      <label for="teamName">Team Name *</label>
+                      <input type="text" id="teamName" name="teamName" required placeholder="Enter your team name" />
+                    </div>
+
+                    <div class="form-group">
+                      <label for="collegeName">College Name *</label>
+                      <input type="text" id="collegeName" name="collegeName" required placeholder="Enter your college name" />
+                    </div>
+
+                    <div class="form-group">
+                      <label for="leaderName">Team Leader Name *</label>
+                      <input type="text" id="leaderName" name="leaderName" required placeholder="Enter leader full name" />
+                    </div>
+
+                    <div class="form-group">
+                      <label for="leaderEmail">Leader Email *</label>
+                      <input type="email" id="leaderEmail" name="leaderEmail" required placeholder="Enter leader email" />
+                    </div>
+
+                    <div class="form-group reg-full">
+                      <label for="leaderPhone">Leader Phone Number *</label>
+                      <div class="input-row">
+                        <input type="tel" id="leaderPhone" name="leaderPhone" required placeholder="Enter phone number" />
+                        <button type="button" class="btn-secondary" id="sendOtpBtn">Send OTP</button>
+                      </div>
+                      <div class="hint" id="leaderPhoneHint"></div>
+                    </div>
+                  </div>
+
+                  <div class="step-actions">
+                    <button type="button" class="btn-primary" id="toStep2Btn">Next</button>
+                    <a class="reg-back" href="../../index.html">Back to Home</a>
+                  </div>
+                </div>
+
+                <div class="reg-step is-hidden" id="step-2">
+                  <div class="step-head">
+                    <h2 class="step-title">Verify Leader Phone</h2>
+                    <p class="step-subtitle">Enter the OTP sent to the leader phone number.</p>
+                  </div>
+
+                  <div class="reg-grid">
+                    <div class="form-group reg-full">
+                      <label for="leaderOtp">OTP *</label>
+                      <div class="input-row">
+                        <input type="text" id="leaderOtp" name="leaderOtp" inputmode="numeric" placeholder="Enter OTP" />
+                        <button type="button" class="btn-secondary" id="verifyOtpBtn">Verify</button>
+                      </div>
+                      <div class="hint" id="otpHint"></div>
+                    </div>
+                  </div>
+
+                  <div class="step-actions">
+                    <button type="button" class="btn-secondary" id="backToStep1Btn">Back</button>
+                    <button type="button" class="btn-primary" id="toStep3Btn" disabled>Continue</button>
+                  </div>
+                </div>
+
+                <div class="reg-step is-hidden" id="step-3">
+                  <div class="step-head">
+                    <h2 class="step-title">Team Members</h2>
+                    <p class="step-subtitle">Add team member names and phone numbers (excluding the leader).</p>
+                  </div>
+
+                  <div class="reg-grid">
+                    <div class="form-group reg-full">
+                      <label for="memberCount">Number of Team Members (excluding leader) *</label>
+                      <select id="memberCount" name="memberCount" required>
+                        <option value="" selected disabled>Select count</option>
+                        <option value="1">1 Member (Total 2)</option>
+                        <option value="2">2 Members (Total 3)</option>
+                        <option value="3">3 Members (Total 4)</option>
+                      </select>
+                      <div class="hint">Total team size = leader + members.</div>
+                    </div>
+                  </div>
+
+                  <div class="member-list" id="memberList" aria-label="Team members"></div>
+
+                  <div class="step-actions">
+                    <button type="button" class="btn-secondary" id="backToStep2Btn">Back</button>
+                    <button type="submit" class="btn-primary" id="submitBtn">Submit Registration</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-message" id="formMessage" aria-live="polite"></div>
+            </form>
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
+

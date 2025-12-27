@@ -87,12 +87,41 @@ img {
 
 /* Navigation */
 
+#nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.474), rgba(0, 0, 0, 0.462), rgba(0, 0, 0, 0.354));
+  border-bottom: 1px solid rgba(0, 0, 0, 0.415);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  transition: var(--transition);
+}
+
+[data-theme="light"] #nav {
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.474), rgba(0, 0, 0, 0.462), rgba(0, 0, 0, 0.354));
+  border-bottom: 1px solid rgba(0, 0, 0, 0.415);
+}
+
+#nav.scrolled {
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.474), rgba(0, 0, 0, 0.462), rgba(0, 0, 0, 0.354));
+  border-bottom: 1px solid rgba(0, 0, 0, 0.415);
+}
+
+[data-theme="light"] #nav.scrolled {
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.474), rgba(0, 0, 0, 0.462), rgba(0, 0, 0, 0.354));
+  border-bottom: 1px solid rgba(0, 0, 0, 0.415);
+}
+
 .nav-container {
   max-width: 1200px;
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 1rem 1.5rem;
 }
 
 .theme-toggle-container {
@@ -124,6 +153,20 @@ img {
   font-weight: 700;
   letter-spacing: 2px;
   color: var(--nav-text);
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  white-space: nowrap;
+}
+
+.nav-logo span {
+  white-space: nowrap;
+}
+
+.logo-img {
+  width: 34px;
+  height: 34px;
+  flex: 0 0 auto;
 }
 
 .nav-links {
@@ -174,6 +217,18 @@ img {
   padding: 8rem 2rem 4rem;
   position: relative;
   overflow: hidden;
+
+  background-image:
+    linear-gradient(135deg, rgba(2, 6, 23, 0.92) 0%, rgba(2, 6, 23, 0.78) 45%, rgba(2, 6, 23, 0.92) 100%),
+    url('assets/banner.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+[data-theme="light"] .hero {
+  background-image:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.96) 0%, rgba(248, 250, 252, 0.96) 45%, rgba(255, 255, 255, 0.96) 100%);
 }
 
 .hero::before {
@@ -183,12 +238,7 @@ img {
   left: 0;
   right: 0;
   bottom: 0;
-  background: 
-    linear-gradient(90deg, transparent 0%, transparent calc(100% - 1px), #f0f0f0 calc(100% - 1px)),
-    linear-gradient(0deg, transparent 0%, transparent calc(100% - 1px), #f0f0f0 calc(100% - 1px));
-  background-size: 60px 60px;
-  opacity: 0.4;
-  z-index: 0;
+  display: none;
 }
 
 .hero-content {
