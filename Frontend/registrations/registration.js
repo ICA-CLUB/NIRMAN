@@ -1,3 +1,9 @@
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2'
+
+// Initialize Supabase
+const supabaseUrl = 'https://pzvgldyubmvsyrnexpdy.supabase.co'
+const supabaseKey = 'sb_publishable_oZA6cnDRUnWbYhz-JDf-cQ_uYVJAzU8'
+const supabase = createClient(supabaseUrl, supabaseKey)
 
 function setFormMessage(type, message) {
   const formMessage = document.getElementById('formMessage');
@@ -191,7 +197,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   if (sendOtpBtn) {
-    sendOtpBtn.addEventListener('click', () => {
+    sendOtpBtn.addEventListener('click', async () => {
       setFormMessage('', '');
       setHint('otpHint', '');
 
@@ -201,13 +207,121 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
-      otp = String(Math.floor(100000 + Math.random() * 900000));
-      otpSentFor = normalizePhone(leaderPhone);
-      leaderPhoneVerified = false;
-      if (toStep3Btn) toStep3Btn.disabled = true;
+      // Disable button while sending
+      sendOtpBtn.disabled = true;
+      sendOtpBtn.textContent = 'Sending...';
 
-      setHint('leaderPhoneHint', 'OTP sent. (Demo) Use the OTP shown below.');
-      setHint('otpHint', `Your OTP is: ${otp}`);
+      try {
+        // Format phone number for Supabase (with country code)
+        const formattedPhone = normalizePhone(leaderPhone).length === 10 
+          ? `+91${normalizePhone(leaderPhone)}` 
+          : `+${normalizePhone(leaderPhone)}`;
+
+        // Send OTP using Supabase Auth
+        const { data, error } = await supabase.auth.signInWithOtp({
+          phone: formattedPhone,
+          options: {
+            shouldCreateUser: false // Don't create user account, just verify phone
+          }
+        });
+
+        if (error) throw error;
+
+        otpSentFor = normalizePhone(leaderPhone);
+        leaderPhoneVerified = false;
+        if (toStep3Btn) toStep3Btn.disabled = true;
+
+        setHint('leaderPhoneHint', 'OTP sent successfully!');
+        setHint('otpHint', 'Please enter the OTP received on your phone.');
+
+      } catch (error) {
+        console.error('Error sending OTP:', error);
+        setHint('leaderPhoneHint', '');
+        setHint('otpHint', 'Failed to send OTP. Please try again.');
+        
+        // Fallback to demo OTP if Supabase fails
+        otp = String(Math.floor(100000 + Math.random() * 900000));
+        otpSentFor = normalizePhone(leaderPhone);
+        setHint('otpHint', `OTP service unavailable. Demo OTP: ${otp}`);
+      } finally {
+        sendOtpBtn.disabled = false;
+        sendOtpBtn.textContent = 'Send OTP';
+      }
+    });
+  }
+
+  if (verifyOtpBtn) {
+    verifyOtpBtn.addEventListener('click', async () => {
+      setFormMessage('', '');
+
+      const leaderPhone = normalizePhone(getTrimmedValue('leaderPhone'));
+      const otpInput = getTrimmedValue('leaderOtp');
+
+      if (!otpSentFor || otpSentFor !== leaderPhone) {
+        setHint('otpHint', 'Please click "Send OTP" again.');
+        leaderPhoneVerified = false;
+        if (toStep3Btn) toStep3Btn.disabled = true;
+        return;
+      }
+
+      if (!otpInput) {
+        setHint('otpHint', 'Please enter the OTP.');
+        return;
+      }
+
+      // Disable button while verifying
+      verifyOtpBtn.disabled = true;
+      verifyOtpBtn.textContent = 'Verifying...';
+
+      try {
+        // Format phone number for Supabase
+        const formattedPhone = leaderPhone.length === 10 
+          ? `+91${leaderPhone}` 
+          : `+${leaderPhone}`;
+
+        // Verify OTP using Supabase Auth
+        const { data, error } = await supabase.auth.verifyOtp({
+          phone: formattedPhone,
+          token: otpInput,
+          type: 'sms'
+        });
+
+        if (error) {
+          // Check if it's the demo OTP fallback
+          if (otp && otpInput === otp) {
+            leaderPhoneVerified = true;
+            setHint('otpHint', 'Phone verified successfully (Demo mode).');
+            if (toStep3Btn) toStep3Btn.disabled = false;
+          } else {
+            throw error;
+          }
+        } else {
+          // Real OTP verification successful
+          leaderPhoneVerified = true;
+          setHint('otpHint', 'Phone verified successfully!');
+          if (toStep3Btn) toStep3Btn.disabled = false;
+          
+          // Clear any demo OTP
+          otp = '';
+        }
+
+      } catch (error) {
+        console.error('Error verifying OTP:', error);
+        
+        // Check if it's the demo OTP fallback
+        if (otp && otpInput === otp) {
+          leaderPhoneVerified = true;
+          setHint('otpHint', 'Phone verified successfully (Demo mode).');
+          if (toStep3Btn) toStep3Btn.disabled = false;
+        } else {
+          setHint('otpHint', 'Incorrect OTP. Please try again.');
+          leaderPhoneVerified = false;
+          if (toStep3Btn) toStep3Btn.disabled = true;
+        }
+      } finally {
+        verifyOtpBtn.disabled = false;
+        verifyOtpBtn.textContent = 'Verify OTP';
+      }
     });
   }
 
@@ -226,38 +340,6 @@ document.addEventListener('DOMContentLoaded', () => {
     backToStep1Btn.addEventListener('click', () => {
       setFormMessage('', '');
       showStep(1);
-    });
-  }
-
-  if (verifyOtpBtn) {
-    verifyOtpBtn.addEventListener('click', () => {
-      setFormMessage('', '');
-
-      const leaderPhone = normalizePhone(getTrimmedValue('leaderPhone'));
-      const otpInput = getTrimmedValue('leaderOtp');
-
-      if (!otp || !otpSentFor || otpSentFor !== leaderPhone) {
-        setHint('otpHint', 'Please click “Send OTP” again.');
-        leaderPhoneVerified = false;
-        if (toStep3Btn) toStep3Btn.disabled = true;
-        return;
-      }
-
-      if (!otpInput) {
-        setHint('otpHint', 'Please enter the OTP.');
-        return;
-      }
-
-      if (otpInput !== otp) {
-        setHint('otpHint', 'Incorrect OTP. Try again.');
-        leaderPhoneVerified = false;
-        if (toStep3Btn) toStep3Btn.disabled = true;
-        return;
-      }
-
-      leaderPhoneVerified = true;
-      setHint('otpHint', 'Phone verified successfully.');
-      if (toStep3Btn) toStep3Btn.disabled = false;
     });
   }
 
@@ -291,7 +373,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  form.addEventListener('submit', (e) => {
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
     setFormMessage('', '');
 
@@ -319,22 +401,64 @@ document.addEventListener('DOMContentLoaded', () => {
       submitBtn.textContent = 'Submitting...';
     }
 
-    window.setTimeout(() => {
-      setFormMessage('success', 'Registration submitted successfully! (Frontend verification demo)');
-      form.reset();
-      if (memberListEl) memberListEl.innerHTML = '';
-      otp = '';
-      otpSentFor = '';
-      leaderPhoneVerified = false;
-      setHint('leaderPhoneHint', '');
-      setHint('otpHint', '');
-      showStep(1);
-      if (toStep3Btn) toStep3Btn.disabled = true;
+    try {
+      // Prepare registration data
+      const formData = new FormData(form);
+      const registrationData = {
+        team_name: formData.get('teamName'),
+        leader_name: formData.get('leaderName'),
+        leader_email: formData.get('leaderEmail'),
+        leader_phone: formData.get('leaderPhone'),
+        leader_college: formData.get('leaderCollege'),
+        leader_year: formData.get('leaderYear'),
+        leader_department: formData.get('leaderDepartment'),
+        payment_status: 'pending',
+        created_at: new Date().toISOString()
+      };
+
+      // Insert registration into Supabase
+      const { data, error } = await supabase
+        .from('registrations')
+        .insert([registrationData])
+        .select()
+        .single();
+
+      if (error) throw error;
+
+      // Save team members if any
+      const members = Array.from(document.querySelectorAll('.member-card')).map((card) => {
+        const index = card.dataset.memberIndex;
+        return {
+          registration_id: data.id,
+          name: document.getElementById(`memberName_${index}`).value,
+          email: document.getElementById(`memberEmail_${index}`)?.value || '',
+          phone: document.getElementById(`memberPhone_${index}`).value,
+          college: document.getElementById(`memberCollege_${index}`)?.value || '',
+          year: document.getElementById(`memberYear_${index}`)?.value || '',
+          department: document.getElementById(`memberDepartment_${index}`)?.value || '',
+          created_at: new Date().toISOString()
+        };
+      });
+
+      if (members.length > 0) {
+        const { error: memberError } = await supabase
+          .from('team_members')
+          .insert(members);
+        
+        if (memberError) throw memberError;
+      }
+
+      // Redirect to payment page with registration ID
+      window.location.href = `../payment/payment.html?id=${data.id}`;
+
+    } catch (error) {
+      console.error('Error submitting registration:', error);
+      setFormMessage('error', 'There was an error submitting your registration. Please try again.');
       if (submitBtn) {
         submitBtn.disabled = false;
         submitBtn.textContent = 'Submit Registration';
       }
-    }, 650);
+    }
   });
 
   // Default state
@@ -347,4 +471,3 @@ document.addEventListener('DOMContentLoaded', () => {
   if (leaderNameEl) leaderNameEl.autocomplete = 'name';
   if (collegeNameEl) collegeNameEl.autocomplete = 'organization';
 });
-

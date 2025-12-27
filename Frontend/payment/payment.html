@@ -1,0 +1,82 @@
+<!-- Frontend/registrations/payment.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment - NIRMAN</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="registration.css">
+    <style>
+        .payment-container {
+            max-width: 600px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .qr-code {
+            width: 256px;
+            height: 256px;
+            margin: 1.5rem auto;
+            padding: 1rem;
+            background: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .payment-details {
+            margin: 1.5rem 0;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+        }
+        
+        .payment-success {
+            display: none;
+            margin-top: 2rem;
+            padding: 1rem;
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            border-radius: 8px;
+            color: #22c55e;
+        }
+    </style>
+</head>
+<body>
+    <div class="payment-container">
+        <h2>Complete Your Registration</h2>
+        <p>Please complete the payment using UPI to confirm your registration.</p>
+        
+        <div class="payment-details">
+            <p><strong>Amount:</strong> ₹500.00</p>
+            <p><strong>UPI ID:</strong> your-upi-id@bank</p>
+        </div>
+        
+        <div class="qr-code">
+            <!-- Replace with your actual UPI QR code image -->
+            <img src="path-to-your-qr-code.png" alt="UPI QR Code" style="max-width: 100%; height: auto;">
+        </div>
+        
+        <p>After successful payment, please click the button below to verify your payment.</p>
+        
+        <div class="step-actions">
+            <button type="button" id="verifyPayment" class="btn btn-primary">I've Made the Payment</button>
+            <a href="../index.html" class="btn btn-secondary">Back to Home</a>
+        </div>
+        
+        <div id="paymentSuccess" class="payment-success">
+            <p>✅ Payment verified successfully! Your registration is now complete.</p>
+            <p>You will receive a confirmation email shortly.</p>
+            <a href="../index.html" class="btn btn-secondary">Return to Home</a>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="payment.js"></script>
+</body>
+</html>
