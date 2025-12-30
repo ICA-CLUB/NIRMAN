@@ -1068,4 +1068,99 @@ footer {
     width: 100%;
     text-align: center;
   }
+
+  /* Event Details Mobile */
+  .event-details {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .event-detail-item {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  /* Format Timeline Mobile */
+  .format-timeline {
+    padding: 0 1rem;
+    margin: 2rem auto 0;
+  }
+
+  .format-timeline::before {
+    left: 20px;
+  }
+
+  .level-card {
+    width: calc(100% - 3rem);
+    margin-left: 3rem !important;
+    margin-right: 0 !important;
+    text-align: left !important;
+    padding: 1.5rem;
+  }
+
+  .level-number {
+    left: -30px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  /* Event Flow Mobile */
+  .flow-container {
+    flex-direction: column !important;
+    align-items: center !important;
+    padding: 1rem 0 !important;
+  }
+
+  .flow-container::before {
+    width: 3px !important;
+    height: 100% !important;
+    top: 0 !important;
+    left: 30px !important;
+    transform: none !important;
+    background: linear-gradient(to bottom, #3b82f6, #8b5cf6) !important;
+  }
+
+  .flow-step {
+    width: 100% !important;
+    max-width: 300px !important;
+    text-align: left !important;
+    display: flex !important;
+    align-items: center !important;
+    padding: 1rem 0 1rem 4rem !important;
+    position: relative !important;
+    margin-bottom: 1rem !important;
+  }
+
+  .flow-icon {
+    position: absolute !important;
+    left: 0 !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    margin: 0 !important;
+    width: 50px !important;
+    height: 50px !important;
+    font-size: 1rem !important;
+  }
+
+  .flow-step h4 {
+    margin: 0 0 0.25rem 0 !important;
+    font-size: 1.1rem !important;
+  }
+
+  .flow-step p {
+    margin: 0 !important;
+    font-size: 0.9rem !important;
+    color: var(--muted-text) !important;
+  }
+
+  /* Rules Section Mobile */
+  .rules-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
+  }
+
+  .rule-card {
+    padding: 1.5rem !important;
+  }
 }
