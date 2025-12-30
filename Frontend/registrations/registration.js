@@ -1,10 +1,15 @@
-
-import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2'
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.7/+esm'
 
 // Initialize Supabase
 const supabaseUrl = 'https://pzvgldyubmvsyrnexpdy.supabase.co'
 const supabaseKey = 'sb_publishable_oZA6cnDRUnWbYhz-JDf-cQ_uYVJAzU8'
-const supabase = createClient(supabaseUrl, supabaseKey)
+const supabase = createClient(supabaseUrl, supabaseKey, {
+    auth: {
+        autoRefreshToken: true,
+        persistSession: true,
+        detectSessionInUrl: true
+    }
+})
 
 // DOM Elements
 const form = document.getElementById('registrationForm')
@@ -23,10 +28,12 @@ function showStep(stepNumber) {
 
 // Validate step 1 (leader details)
 function validateStep1() {
+    console.log('Validating step 1...')
     // Required fields
     const requiredFields = ['teamName', 'collegeName', 'leaderName', 'leaderEmail', 'leaderPhone']
     for (const field of requiredFields) {
         const value = getTrimmedValue(field)
+        console.log(`Field ${field}: "${value}"`)
         if (!value) {
             setFormMessage('error', `Please fill in all required fields.`)
             return false
@@ -34,17 +41,22 @@ function validateStep1() {
     }
 
     // Validate email
-    if (!validateEmail(getTrimmedValue('leaderEmail'))) {
+    const email = getTrimmedValue('leaderEmail')
+    console.log('Email validation:', email, validateEmail(email))
+    if (!validateEmail(email)) {
         setFormMessage('error', 'Please enter a valid email address.')
         return false
     }
 
     // Validate phone
-    if (!validatePhone(getTrimmedValue('leaderPhone'))) {
+    const phone = getTrimmedValue('leaderPhone')
+    console.log('Phone validation:', phone, validatePhone(phone))
+    if (!validatePhone(phone)) {
         setFormMessage('error', 'Please enter a valid phone number.')
         return false
     }
 
+    console.log('Step 1 validation passed!')
     return true
 }
 
@@ -131,13 +143,20 @@ function validatePhone(phone) {
 document.addEventListener('DOMContentLoaded', () => {
     // Step 1 to Step 2
     if (toStep2Btn) {
+        console.log('Next button found:', toStep2Btn)
         toStep2Btn.addEventListener('click', (e) => {
+            console.log('Next button clicked')
             e.preventDefault()
-            if (validateStep1()) {
+            const isValid = validateStep1()
+            console.log('Validation result:', isValid)
+            if (isValid) {
+                console.log('Moving to step 2')
                 showStep(2)
                 setFormMessage('', '')
             }
         })
+    } else {
+        console.error('Next button not found!')
     }
 
     // Back to Step 1
@@ -178,14 +197,18 @@ document.addEventListener('DOMContentLoaded', () => {
                     created_at: new Date().toISOString()
                 }
 
-                // Save team to database
+                console.log('Saving team data:', teamData)
                 const { data: team, error: teamError } = await supabase
                     .from('teams')
                     .insert([teamData])
                     .select()
                     .single()
 
-                if (teamError) throw teamError
+                if (teamError) {
+                    console.error('Team save error:', teamError)
+                    throw teamError
+                }
+                console.log('Team saved successfully:', team)
 
                 // Save leader
                 const leaderData = {
@@ -228,14 +251,29 @@ document.addEventListener('DOMContentLoaded', () => {
                 sessionStorage.setItem('teamId', team.id)
                 sessionStorage.setItem('teamName', team.team_name)
 
-                // Redirect to payment
-                window.location.href = '../payment/payment.html'
+                // Show success message
+                setFormMessage('success', 'Registration successful 🔥! Our team will contact you shortly.')
+                
+                // Reset form after successful submission
+                form.reset()
+                memberList.innerHTML = ''
+                showStep(1)
+                
+                // Reset button
+                submitBtn.disabled = false
+                submitBtn.textContent = 'Submit Registration'
 
             } catch (error) {
-                console.error('Registration error:', error)
-                setFormMessage('error', 'Registration failed. Please try again.')
+                console.error('Registration error:', {
+                    message: error.message,
+                    details: error.details,
+                    hint: error.hint,
+                    code: error.code
+                });
+                setFormMessage('error', `Maybe Serve is Down 😵: ---  Try Again After Some Time ---  `)
+                console.log('error', `Registration failed: ${error.message}`)
                 submitBtn.disabled = false
-                submitBtn.textContent = 'Submit & Go to Payment'
+                submitBtn.textContent = 'Submit '
             }
         })
     }
