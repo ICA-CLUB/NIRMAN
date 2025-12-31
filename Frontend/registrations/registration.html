@@ -34,6 +34,16 @@
     </nav>
 
     <main class="reg-page">
+      <!-- Fee Info Button -->
+      <button class="fee-info-btn" id="feeInfoBtn" aria-label="Show fee information">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="16" x2="12" y2="12"></line>
+          <line x1="12" y1="8" x2="12.01" y2="8"></line>
+        </svg>
+        Fee Info
+      </button>
+
       <section class="reg-hero" aria-label="Registration">
         <div class="reg-hero-inner">
           <h1 class="reg-title">Register Your Team</h1>
@@ -116,6 +126,36 @@
         </div>
       </section>
     </main>
+
+    <!-- Fee Information Popup -->
+    <div id="feePopup" class="fee-popup-overlay" role="dialog" aria-modal="true" aria-labelledby="feePopupTitle">
+      <div class="fee-popup">
+        <div class="fee-popup-header">
+          <h3 id="feePopupTitle">📋 Registration Fee Information</h3>
+          <button class="fee-popup-close" id="closeFeePopup" aria-label="Close popup">&times;</button>
+        </div>
+        <div class="fee-popup-content">
+          <div class="fee-info">
+            <div class="fee-item">
+              <div class="fee-label">Individual Registration:</div>
+              <div class="fee-amount">₹100 per person</div>
+              <div class="fee-note">Excludes accommodation</div>
+            </div>
+            <div class="fee-item">
+              <div class="fee-label">Team Registration:</div>
+              <div class="fee-amount">₹600 per team</div>
+              <div class="fee-note">Includes all team members (2-4 people)</div>
+            </div>
+            <div class="fee-highlight">
+              <strong>💡 Team registration offers better value!</strong>
+            </div>
+          </div>
+          <div class="fee-popup-actions">
+            <button class="btn-primary" id="acceptFeeBtn">I Understand</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
 

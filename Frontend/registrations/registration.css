@@ -312,3 +312,204 @@
   }
 }
 
+/* Fee Info Button */
+.fee-info-btn {
+  position: fixed;
+  top: 100px;
+  right: 20px;
+  background: #ffffff;
+  color: #000000;
+  border: 2px solid #000000;
+  border-radius: 50px;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  z-index: 999;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.fee-info-btn:hover {
+  background: #000000;
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+}
+
+.fee-info-btn svg {
+  flex-shrink: 0;
+}
+
+/* Fee Popup Styles */
+.fee-popup-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(5px);
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
+}
+
+.fee-popup-overlay.show {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fee-popup {
+  background: #ffffff;
+  border: 2px solid #000000;
+  border-radius: 16px;
+  max-width: 500px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  animation: slideUp 0.3s ease;
+}
+
+.fee-popup-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  border-bottom: 1px solid #000000;
+}
+
+.fee-popup-header h3 {
+  color: #000000;
+  font-size: 1.3rem;
+  margin: 0;
+}
+
+.fee-popup-close {
+  background: none;
+  border: none;
+  color: #000000;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.fee-popup-close:hover {
+  background: #f0f0f0;
+}
+
+.fee-popup-content {
+  padding: 1.5rem;
+}
+
+.fee-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.fee-item {
+  background: #f8f8f8;
+  border: 1px solid #000000;
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.fee-item:hover {
+  background: #f0f0f0;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.fee-label {
+  color: #000000;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.fee-amount {
+  color: #000000;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.fee-note {
+  color: #666666;
+  font-size: 0.9rem;
+}
+
+.fee-highlight {
+  background: #000000;
+  color: #ffffff;
+  border: 2px solid #000000;
+  border-radius: 12px;
+  padding: 1rem;
+  text-align: center;
+}
+
+.fee-popup-actions {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.fee-popup-actions .btn-primary {
+  background: #000000;
+  color: #ffffff;
+  border: 2px solid #000000;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.fee-popup-actions .btn-primary:hover {
+  background: #ffffff;
+  color: #000000;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { 
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to { 
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .fee-popup {
+    width: 95%;
+    margin: 1rem;
+  }
+  
+  .fee-popup-header {
+    padding: 1rem;
+  }
+  
+  .fee-popup-content {
+    padding: 1rem;
+  }
+  
+  .fee-item {
+    padding: 1rem;
+  }
+}
+

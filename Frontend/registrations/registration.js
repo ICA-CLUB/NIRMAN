@@ -11,6 +11,64 @@ const supabase = createClient(supabaseUrl, supabaseKey, {
     }
 })
 
+// Fee Popup Elements
+const feePopup = document.getElementById('feePopup')
+const closeFeePopup = document.getElementById('closeFeePopup')
+const acceptFeeBtn = document.getElementById('acceptFeeBtn')
+const feeInfoBtn = document.getElementById('feeInfoBtn')
+
+// Show fee popup on page load
+window.addEventListener('DOMContentLoaded', () => {
+    setTimeout(() => {
+        showFeePopup()
+    }, 1000)
+})
+
+// Show fee popup function
+function showFeePopup() {
+    if (feePopup) {
+        feePopup.classList.add('show')
+        document.body.style.overflow = 'hidden'
+    }
+}
+
+// Hide fee popup function
+function hideFeePopup() {
+    if (feePopup) {
+        feePopup.classList.remove('show')
+        document.body.style.overflow = ''
+    }
+}
+
+// Fee popup event listeners
+if (closeFeePopup) {
+    closeFeePopup.addEventListener('click', hideFeePopup)
+}
+
+if (acceptFeeBtn) {
+    acceptFeeBtn.addEventListener('click', hideFeePopup)
+}
+
+if (feeInfoBtn) {
+    feeInfoBtn.addEventListener('click', showFeePopup)
+}
+
+// Close popup when clicking overlay
+if (feePopup) {
+    feePopup.addEventListener('click', (e) => {
+        if (e.target === feePopup) {
+            hideFeePopup()
+        }
+    })
+}
+
+// Close popup with Escape key
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && feePopup.classList.contains('show')) {
+        hideFeePopup()
+    }
+})
+
 // DOM Elements
 const form = document.getElementById('registrationForm')
 const toStep2Btn = document.getElementById('toStep2Btn')
