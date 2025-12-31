@@ -40,7 +40,7 @@ body {
 }
 
 @keyframes pulse-glow {
-  0% { opacity: 0.3; }
+  0% { opacity: 0.1; }
   100% { opacity: 0.8; }
 }
 
@@ -118,8 +118,15 @@ img {
   background-image: url('https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=1920&h=1080&fit=crop');
 }
 
+.prizes {
+  
+  background: linear-gradient(rgba(15, 23, 42, 0.885), rgba(15, 23, 42, 0.879)) !important;
+  position: relative;
+}
+
 .prizes::before {
-  background-image: url('https://images.unsplash.com/photo-1554224154-260325c0596c?w=1920&h=1080&fit=crop');
+  background-image: url('https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=1920&h=1080&fit=crop') !important;
+  opacity: 0.6 !important;
 }
 
 .about::before,
@@ -138,7 +145,7 @@ img {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  opacity: 0.02;
+  opacity: 0.1;
   z-index: -1;
 }
 
@@ -276,7 +283,7 @@ img {
   position: relative;
   overflow: hidden;
   background-image: 
-    linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.8)),
+    linear-gradient(rgba(15, 23, 42, 0.885), rgba(15, 23, 42, 0.879)),
     url('assets/banner.png');
   background-size: cover;
   background-position: center;
@@ -1463,7 +1470,7 @@ body {
 
 @keyframes rise {
   0% { transform: translateY(0) scale(1); opacity: 0; }
-  20% { opacity: 0.5; }
+  20% { opacity: 0.1; }
   100% { transform: translateY(-120vh) scale(1.5); opacity: 0; }
 }
 
