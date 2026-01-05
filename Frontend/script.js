@@ -1,6 +1,6 @@
 // Default configuration
 const defaultConfig = {
-  event_title: "NIRMAN",
+  event_title: "NIRMAAN",
   // Add other default configuration properties here
 };
 
@@ -117,5 +117,5 @@ document.addEventListener('DOMContentLoaded', () => {
   initializeSdks();
   
   // Add any other initialization code here
-  console.log('NIRMAN Hackathon website initialized');
+  console.log('NIRMAAN Hackathon website initialized');
 });
